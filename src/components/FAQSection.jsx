@@ -5,11 +5,11 @@ import food from "../assets/img/food.png";
 import online from "../assets/img/online.png";
 
 const faqs = [
-  "How does Order.UK work?",
+  "How does RedPizza work?",
   "What payment methods are accepted?",
   "Can I track my order in real-time?",
   "Are there any special discounts or promotions available?",
-  "Is Order.UK available in my area?",
+  "Is RedPizza available in my area?",
 ];
 
 const steps = [
@@ -127,7 +127,7 @@ export default function FAQSection() {
         <div className="text-center text-gray-700 max-w-2xl mx-auto">
           <h3 className="text-xl font-bold mb-4">Who we are?</h3>
           <p>
-            We are Order.UK, a passionate team dedicated to making food ordering
+            We are RedPizza, a passionate team dedicated to making food ordering
             simple, fast, and enjoyable for everyone.
           </p>
         </div>
@@ -155,7 +155,7 @@ export default function FAQSection() {
 
       {/* Footer Text */}
       <p className="text-center text-gray-600 mt-10 max-w-2xl mx-auto">
-        Order.UK simplifies the food ordering process. Browse through our
+        RedPizza simplifies the food ordering process. Browse through our
         diverse menu, select your favorite dishes, and proceed to checkout. Your
         delicious meal will be on its way to your doorstep in no time!
       </p>

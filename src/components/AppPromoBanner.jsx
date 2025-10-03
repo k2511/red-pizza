@@ -20,13 +20,13 @@ export default function AppPromoBanner() {
       {/* Right Section (Text + Buttons) */}
       <div className="w-full md:w-1/2 text-center md:text-left">
         <h2 className="text-3xl md:text-4xl font-bold leading-snug flex items-center gap-2 mb-6">
-      <img 
-        src={uk} 
-        alt="Order Logo" 
-        className="h-10 md:h-12 object-contain inline-block"
-      />
-      <span className="text-indigo-600">.uk</span>ing is more
-    </h2>
+          <img
+            src={uk}
+            alt="Order Logo"
+            className="h-10 md:h-12 object-contain inline-block"
+          />
+          <span className="text-indigo-600">.uk</span>ing is more
+        </h2>
         <h3 className="text-3xl md:text-4xl font-bold mt-2">
           <span className="bg-indigo-900 text-orange-400 px-3 py-1 rounded-lg">
             Personalised
@@ -34,40 +34,39 @@ export default function AppPromoBanner() {
           & Instant
         </h3>
         <p className="text-gray-600 mt-4 ">
-          Download the Order.uk app for faster ordering
+          Download the RedPizza app for faster ordering
         </p>
 
         {/* App Buttons */}
-      <div className="flex items-center gap-4 mt-6 justify-center md:justify-start">
-  {/* App Store */}
-  <a
-    href="#"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
-  >
-    <img src={apple} alt="Apple Logo" className="h-6" />
-    <div className="leading-tight text-left">
-      <span className="text-xs">Download on the</span>
-      <p className="text-sm font-semibold">App Store</p>
-    </div>
-  </a>
+        <div className="flex items-center gap-4 mt-6 justify-center md:justify-start">
+          {/* App Store */}
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+          >
+            <img src={apple} alt="Apple Logo" className="h-6" />
+            <div className="leading-tight text-left">
+              <span className="text-xs">Download on the</span>
+              <p className="text-sm font-semibold">App Store</p>
+            </div>
+          </a>
 
-  {/* Google Play */}
-  <a
-    href="#"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
-  >
-    <img src={playstore} alt="Google Play Logo" className="h-6" />
-    <div className="leading-tight text-left">
-      <span className="text-xs">GET IT ON</span>
-      <p className="text-sm font-semibold">Google Play</p>
-    </div>
-  </a>
-</div>
-
+          {/* Google Play */}
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+          >
+            <img src={playstore} alt="Google Play Logo" className="h-6" />
+            <div className="leading-tight text-left">
+              <span className="text-xs">GET IT ON</span>
+              <p className="text-sm font-semibold">Google Play</p>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   );
