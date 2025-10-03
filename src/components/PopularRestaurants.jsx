@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { NavLink } from "react-router-dom"; // ✅ import NavLink
 
 // Example images (replace with your actual assets)
 import res1 from "../assets/img/res1.jpg";
@@ -15,7 +16,7 @@ import res10 from "../assets/img/res10.jpg";
 import res11 from "../assets/img/res11.jpg";
 import res12 from "../assets/img/res12.jpg";
 
-const restaurants = [ res12, res11, res10, res7, res9, res8, res6, res5, res4, res3, res2, res1];
+const restaurants = [res12, res11, res10, res7, res9, res8, res6, res5, res4, res3, res2, res1];
 
 export default function PopularRestaurants() {
   return (
@@ -25,8 +26,9 @@ export default function PopularRestaurants() {
       </h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {restaurants.map((image, i) => (
-          <div
+          <NavLink
             key={i}
+            to="/pages/browsermenu" // ✅ route to Browse Menu
             className="rounded-lg overflow-hidden shadow hover:shadow-lg transition bg-gray-100 cursor-pointer"
           >
             <img
@@ -34,7 +36,7 @@ export default function PopularRestaurants() {
               alt={`Restaurant ${i + 1}`}
               className="w-full h-full object-cover"
             />
-          </div>
+          </NavLink>
         ))}
       </div>
     </div>

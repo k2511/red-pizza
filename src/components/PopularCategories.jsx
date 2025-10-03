@@ -15,12 +15,12 @@ import cat5 from "../assets/img/cat5.png";
 import cat6 from "../assets/img/cat6.png";
 
 const categories = [
-  { name: "Burgers & Fast food", image: cat1 },
+  { name: "Burgers", image: cat1 },
   { name: "Salads", image: cat2 },
-  { name: "Pasta & Casuals", image: cat3 },
+  { name: "Pasta", image: cat3 },
   { name: "Pizza", image: cat4 },
-  { name: "Breakfast", image: cat5 },
-  { name: "Soups", image: cat6 },
+  { name: "Beverages", image: cat5 },
+  { name: "Finger Foods", image: cat6 },
 ];
 
 export default function PopularCategories() {
@@ -29,7 +29,7 @@ export default function PopularCategories() {
       {/* Heading + Arrows in the same row */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold">
-          Order.uk Popular Categories <span className="ml-1">🤩</span>
+          Red Pizza Popular Categories <span className="ml-1">🤩</span>
         </h2>
 
         {/* Navigation Buttons */}
@@ -47,7 +47,7 @@ export default function PopularCategories() {
       <Swiper
         modules={[Navigation]}
         spaceBetween={20}
-        slidesPerView={3}
+        slidesPerView={5}
         navigation={{
           nextEl: ".next-btn",
           prevEl: ".prev-btn",

@@ -47,7 +47,7 @@ export default function PartnerCards() {
           <div className="absolute bottom-6 left-6 text-white">
             <p className="text-sm">{card.subtitle}</p>
             <h3 className="text-2xl font-bold">{card.title}</h3>
-            <button className="mt-3 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full font-medium">
+            <button className="mt-3 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full font-medium">
               {card.button}
             </button>
           </div>

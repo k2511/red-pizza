@@ -17,7 +17,7 @@ const Hero = () => {
       <div className="max-w-7xl relative mx-auto px-6 py-12 h-[510px]">
         <div className=" ">
           <img
-            className="min-w-[36rem] h-[30rem] absolute right-[15%] bottom-0 z-50"
+            className="min-w-[36rem] h-[30rem] absolute right-[15%] bottom-0 z-40"
             src={b1}
             alt=""
           />
@@ -126,14 +126,6 @@ const Hero = () => {
       </div>
 
       <div className="bg-white py-2">
-        <AppPromoBanner />
-      </div>
-
-      <div className="bg-white py-2">
-        <CategoryFilter />
-      </div>
-
-      <div className="bg-white py-2">
         <PartnerCards />
       </div>
 
@@ -143,6 +135,10 @@ const Hero = () => {
 
       <div className="bg-white py-2">
         <StatsSection />
+      </div>
+
+         <div className="bg-white py-2">
+        <AppPromoBanner />
       </div>
     </div>
   );
