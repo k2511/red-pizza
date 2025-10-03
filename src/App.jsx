@@ -10,6 +10,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import CartPage from "./pages/CartPage";
 import BrowseMenu from "./pages/BrowseMenu";
+import LocationMap from "./pages/LocationMap";
 
 
 export default function App() {
@@ -18,10 +19,6 @@ export default function App() {
       {/* Always visible */}
       <TopBar />
       <Navbar />
-      <h1 className="text-3xl font-bold underline">
-        Hello world
-      </h1>
-
       {/* Routed pages */}
       <main className="flex-grow">
         <Routes>
@@ -33,6 +30,9 @@ export default function App() {
           <Route path="/pages/browsermenu" element={<BrowseMenu />} />
         </Routes>
       </main>
+
+ <LocationMap/>
+
 
       {/* Always visible */}
       <Footer />
