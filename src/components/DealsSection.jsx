@@ -9,7 +9,7 @@ const DealsSection = () => {
       {/* Title + Filter Buttons */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold">
-          Up to -40% 🎉 Order.uk exclusive deals
+          Up to -40% 🎉 Red Pizza exclusive deals
         </h2>
 
         {/* Filter Buttons */}

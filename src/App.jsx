@@ -9,7 +9,8 @@ import MenuPage from "./pages/MenuPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import CartPage from "./pages/CartPage";
-import Restaurants from "./pages/Restaurants";
+import BrowseMenu from "./pages/BrowseMenu";
+
 
 export default function App() {
   return (
@@ -17,7 +18,9 @@ export default function App() {
       {/* Always visible */}
       <TopBar />
       <Navbar />
-    
+      <h1 className="text-3xl font-bold underline">
+        Hello world
+      </h1>
 
       {/* Routed pages */}
       <main className="flex-grow">
@@ -27,7 +30,7 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/pages/restaurants" element={<Restaurants />} />
+          <Route path="/pages/browsermenu" element={<BrowseMenu />} />
         </Routes>
       </main>
 

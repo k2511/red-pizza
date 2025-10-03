@@ -23,7 +23,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <div className="w-12 h-12 bg-white-600 rounded-full flex items-center justify-center mr-3">
-            <img src={logo} alt="Logo" className="w-12 h-12 object-cover" />
+            <img src={logo} alt="Logo" className="w-full h-12 object-cover" />
           </div>
         </div>
 
@@ -33,16 +33,12 @@ const Navbar = () => {
             Home
           </NavLink>
            
-          <NavLink to="/browsermenu" className={linkClass}>
+          <NavLink to="/pages/browsermenu" className={linkClass}>
             Browse Menu
           </NavLink>
 
           <NavLink to="/menu" className={linkClass}>
             Special Offers
-          </NavLink>
-
-          <NavLink to="/pages/restaurants" className={navButtonClass}>
-            Restaurants
           </NavLink>
 
           <NavLink to="/track-order" className={linkClass}>
