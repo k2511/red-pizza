@@ -54,7 +54,7 @@ const Navbar = () => {
         <div className="flex items-center">
           <button className="bg-white-900 text-red px-6 py-2 rounded-full flex items-center space-x-2 transition-colors gap-2">
             <User className="w-4 h-4 gap-4" />
-            <span>Login
+            <span>Login &nbsp; /
             </span>
             Signup
           </button>
