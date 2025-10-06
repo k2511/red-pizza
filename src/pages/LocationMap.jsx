@@ -19,8 +19,7 @@ export default function LocationMap() {
                   <div>
                     <p className="text-sm text-gray-400 mb-1">Address</p>
                     <p className="text-base sm:text-lg leading-relaxed">
-                      Tooley St, London Bridge, London SE1 2TF,<br />
-                      United Kingdom
+                      Shop No.04, Radiant Ivy, opposite to Brahma Exuberance, next to Eisha Loreals, Kausar Baugh, Kondhwa, Pune, Maharashtra 411048
                     </p>
                   </div>
                 </div>

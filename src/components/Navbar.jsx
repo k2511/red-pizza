@@ -193,7 +193,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-2">
             <NavLink to="/" className={linkClass}>Home</NavLink>
             <NavLink to="/pages/browsermenu" className={linkClass}>Browse Menu</NavLink>
-            <NavLink to="/menu" className={linkClass}>Special Offers</NavLink>
+            {/* <NavLink to="/menu" className={linkClass}>Special Offers</NavLink> */}
             <NavLink to="/track-order" className={linkClass}>Track Order</NavLink>
           </div>
 
@@ -224,7 +224,7 @@ const Navbar = () => {
           <div className="md:hidden mt-3 space-y-2 flex flex-col items-start">
             <NavLink to="/" className={linkClass} onClick={() => setIsOpen(false)}>Home</NavLink>
             <NavLink to="/pages/browsermenu" className={linkClass} onClick={() => setIsOpen(false)}>Browse Menu</NavLink>
-            <NavLink to="/menu" className={linkClass} onClick={() => setIsOpen(false)}>Special Offers</NavLink>
+            {/* <NavLink to="/menu" className={linkClass} onClick={() => setIsOpen(false)}>Special Offers</NavLink> */}
             <NavLink to="/track-order" className={linkClass} onClick={() => setIsOpen(false)}>Track Order</NavLink>
 
             {/* Mobile Login Button */}

@@ -162,11 +162,6 @@
 
 
 
-
-
-
-
-
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { MapPin, ShoppingCart, Star, CircleArrowDown, X } from "lucide-react";

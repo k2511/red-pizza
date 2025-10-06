@@ -280,9 +280,9 @@ const Hero = () => {
         <StatsSection />
       </div>
 
-      <div className="bg-white py-2">
+      {/* <div className="bg-white py-2">
         <AppPromoBanner />
-      </div>
+      </div> */}
     </div>
   );
 };
