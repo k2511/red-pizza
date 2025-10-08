@@ -8,6 +8,12 @@ import imgi3 from "../assets/img/imgi3.jpg";
 import imgi4 from "../assets/img/imgi4.jpg";
 import imgi5 from "../assets/img/imgi5.jpg";
 import imgi7 from "../assets/img/imgi7.jpg";
+import imgi010 from "../assets/img/imgi010.jpg";
+import imgi020 from "../assets/img/imgi020.jpg";
+import imgi030 from "../assets/img/imgi030.jpg";
+import imgi050 from "../assets/img/imgi050.jpg";
+import imgi060 from "../assets/img/imgi060.jpg";
+import imgi070 from "../assets/img/imgi070.jpg";
 
 const categories = [
   {
@@ -15,7 +21,7 @@ const categories = [
     title: "Spicy Jalapeno Pizza [Regular 7'']",
     desc: "Tangy, Spicy Jalapenos with Mozzarella & Molten Cheese. 100% Dairy Cheese | 0% Mayonnaise",
     price: 99,
-    img: imgi1,
+    img: imgi4,
     type: "veg",
   },
   {
@@ -23,7 +29,7 @@ const categories = [
     title: "Golden Corn Pizza [Regular 7'']",
     desc: "Golden Corn with Mozzarella & Molten Cheese. 100% Dairy Cheese | 0% Mayonnaise",
     price: 99,
-    img: imgi2,
+    img: imgi7,
     type: "veg",
   },
   {
@@ -39,7 +45,7 @@ const categories = [
     title: 'Onion Pizza [Regular 7"]',
     desc: "Onions with Mozzarella & Molten Cheese. 100% Dairy Cheese | 0% Mayonnaise",
     price: 99,
-    img: imgi4,
+    img: imgi2,
     type: "veg",
     bestseller: true,
   },
@@ -48,7 +54,7 @@ const categories = [
     title: 'Tomato Pizza [Regular 7"]',
     desc: "Juicy Tomatoes with Mozzarella & Molten Cheese. 100% Dairy Cheese | 0% Mayonnaise",
     price: 99,
-    img: imgi5,
+    img: imgi1,
     type: "veg",
   },
   {
@@ -56,7 +62,7 @@ const categories = [
     title: 'Chicken & Onion Pizza [Regular 7"]',
     desc: "Herb Chicken, Onion with Mozzarella & Molten Cheese. 100% Dairy Cheese | 0% Mayonnaise",
     price: 129,
-    img: imgi1,
+    img: imgi5,
     type: "nonveg",
     chefsSpecial: true,
   },
@@ -65,7 +71,7 @@ const categories = [
     title: "Any Value Pizza + Garlic Breadsticks",
     desc: "Any Value Pizza & Classic Garlic Breadsticks. The perfect pair!",
     price: 179,
-    img: imgi7,
+    img: imgi010,
     type: "veg",
     bestseller: true,
   },
@@ -74,7 +80,7 @@ const categories = [
     title: "Any Value Pizza + Choco Lava Cake",
     desc: "Any Value Pizza & Choco Lava Cake. End the treat on a sweet note!",
     price: 149,
-    img: imgi2,
+    img: imgi020,
     type: "veg",
   },
   {
@@ -82,7 +88,7 @@ const categories = [
     title: "Any Value Pizza + Coke",
     desc: "Any Value Pizza & Coke. Enjoy refreshing sips with every bite!",
     price: 139,
-    img: imgi3,
+    img: imgi030,
     type: "veg",
   },
   {
@@ -90,7 +96,7 @@ const categories = [
     title: "Pack of 2 Pizzas",
     desc: "Pick any 2 Value Pizzas at a steal deal. Irresistible in every way!",
     price: 189,
-    img: imgi4,
+    img: imgi050,
     type: "veg",
     bestseller: true,
   },
@@ -99,7 +105,7 @@ const categories = [
     title: "Pack of 3 Pizzas",
     desc: "Pick any 3 Value Pizzas. Irresistible in every way!",
     price: 289,
-    img: imgi5,
+    img: imgi060,
     type: "veg",
   },
   {
@@ -107,7 +113,7 @@ const categories = [
     title: "Pack of 4 Pizzas",
     desc: "Pick any 4 Value Pizzas. Irresistible in every way!",
     price: 389,
-    img: imgi7,
+    img: imgi070,
     type: "veg",
   },
 ];
