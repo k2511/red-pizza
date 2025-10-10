@@ -1,7 +1,8 @@
+
 // import React, { useState } from "react";
 // import imgi8 from "../assets/img/imgi8.jpg";
 // import imgi9 from "../assets/img/imgi9.jpg";
-// import vegIcon from "../assets/img/veg.png"; // ✅ Veg icon
+// import vegIcon from "../assets/img/veg.png";
 
 // const comboData = [
 //   {
@@ -11,6 +12,8 @@
 //     price: 238,
 //     oldPrice: 400,
 //     img: imgi8,
+//     type: "veg",
+//     bestseller: true,
 //   },
 //   {
 //     id: 2,
@@ -19,11 +22,14 @@
 //     price: 398,
 //     oldPrice: 600,
 //     img: imgi9,
+//     type: "veg",
+//     chefsSpecial: true,
 //   },
 // ];
 
-// export default function ComboSection({filter}) {
-//    const filteredItems = categories.filter((item) => {
+// export default function ComboSection({ filter }) {
+//   // ✅ Use comboData instead of categories
+//   const filteredItems = comboData.filter((item) => {
 //     if (filter === "all") return true;
 //     if (filter === "veg") return item.type === "veg";
 //     if (filter === "nonveg") return item.type === "nonveg";
@@ -31,6 +37,7 @@
 //     if (filter === "chefsSpecial") return item.chefsSpecial;
 //     return true;
 //   });
+
 //   const [selectedPizza, setSelectedPizza] = useState(null);
 //   const [showModal, setShowModal] = useState(false);
 
@@ -46,7 +53,6 @@
 
 //   return (
 //     <div className="max-w-7xl mx-auto px-4 py-6">
-//       {/* Header */}
 //       <div className="mb-4">
 //         <h2 className="text-lg sm:text-xl font-bold text-gray-800">
 //           1 PLUS 1 @ ₹119 EACH
@@ -57,35 +63,21 @@
 //         </p>
 //       </div>
 
-//       {/* Combo Cards */}
+//       {/* ✅ Use filteredItems instead of comboData */}
 //       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-//         {comboData.map((combo) => (
+//         {filteredItems.map((combo) => (
 //           <div
 //             key={combo.id}
 //             className="bg-white shadow-md rounded-lg overflow-hidden border hover:shadow-lg transition"
 //           >
-//             {/* Combo Image */}
-//             <img
-//               src={combo.img}
-//               alt={combo.title}
-//               className="w-full h-48 object-cover"
-//             />
-
-//             {/* Combo Details */}
+//             <img src={combo.img} alt={combo.title} className="w-full h-48 object-cover" />
 //             <div className="p-4">
-//               {/* Title with Veg Icon */}
 //               <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
-//                 <img
-//                   src={vegIcon}
-//                   alt="veg"
-//                   className="w-4 h-4 object-contain"
-//                 />
+//                 <img src={vegIcon} alt="veg" className="w-4 h-4 object-contain" />
 //                 {combo.title}
 //               </h3>
-
 //               <p className="text-gray-500 text-sm mb-3">{combo.desc}</p>
 
-//               {/* Price + Add Button Row */}
 //               <div className="flex items-center justify-between">
 //                 <div className="flex flex-col">
 //                   <span className="text-gray-800 font-semibold text-base">
@@ -108,7 +100,7 @@
 //         ))}
 //       </div>
 
-//       {/* Modal Section */}
+//       {/* Modal */}
 //       {showModal && selectedPizza && (
 //         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 //           <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">
@@ -118,78 +110,17 @@
 //             >
 //               ×
 //             </button>
-
-//             {/* Header */}
 //             <h2 className="text-lg font-bold mb-2">
 //               {selectedPizza.title} – ₹{selectedPizza.price}
 //             </h2>
-
-//             {/* Choose Pizza Boxes */}
-//             <div className="flex items-center gap-4 mb-6">
-//               <button className="flex-1 border-2 border-orange-500 text-orange-500 rounded-lg p-4 font-medium text-center hover:bg-orange-50">
-//                 + Choose First Pizza
-//               </button>
-//               <button className="flex-1 border-2 border-dashed border-gray-400 text-gray-500 rounded-lg p-4 font-medium text-center hover:bg-gray-50">
-//                 + Choose Second Pizza
-//               </button>
-//             </div>
-
-//             {/* Crust Options */}
-//             <h3 className="font-semibold mb-3">
-//               First Pizza Crust [Regular 7"]
-//             </h3>
-//             <div className="space-y-2 mb-6">
-//               {[
-//                 { name: "Pan Tossed", price: 0 },
-//                 { name: "Thin Crust", price: 0 },
-//                 { name: "Cheese Blast", price: 50 },
-//                 { name: "Thin Crust Cheese Blast", price: 50 },
-//               ].map((crust, i) => (
-//                 <label
-//                   key={i}
-//                   className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
-//                 >
-//                   <div>
-//                     <input type="radio" name="crust" className="mr-2" />
-//                     {crust.name}
-//                   </div>
-//                   <span className="text-gray-600 font-medium">
-//                     + ₹{crust.price}
-//                   </span>
-//                 </label>
-//               ))}
-//             </div>
-
-//             {/* Type Filter */}
-//             <h3 className="font-semibold mb-3">First Pizza [Regular 7"]</h3>
-//             <div className="flex gap-2 mb-6">
-//               {["Both", "Veg", "Non-Veg"].map((type, idx) => (
-//                 <button
-//                   key={idx}
-//                   className={`px-4 py-1 rounded-full border ${
-//                     type === "Both"
-//                       ? "bg-black text-white"
-//                       : "text-gray-700 hover:bg-gray-100"
-//                   }`}
-//                 >
-//                   {type}
-//                 </button>
-//               ))}
-//             </div>
-
-//             {/* Footer Section */}
-//             <div className="flex justify-between items-center mt-4 border-t pt-4">
-//               <span className="text-gray-700 font-medium">Items Added 0/2</span>
-//               <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">
-//                 Next ₹{selectedPizza.price}
-//               </button>
-//             </div>
+//             {/* Modal content unchanged */}
 //           </div>
 //         </div>
 //       )}
 //     </div>
 //   );
 // }
+
 
 
 import React, { useState } from "react";
@@ -220,15 +151,23 @@ const comboData = [
   },
 ];
 
-export default function ComboSection({ filter }) {
-  // ✅ Use comboData instead of categories
+export default function ComboSection({ filter = "all", searchTerm = "" }) {
   const filteredItems = comboData.filter((item) => {
-    if (filter === "all") return true;
-    if (filter === "veg") return item.type === "veg";
-    if (filter === "nonveg") return item.type === "nonveg";
-    if (filter === "bestseller") return item.bestseller;
-    if (filter === "chefsSpecial") return item.chefsSpecial;
-    return true;
+    // Category filter
+    const categoryMatch =
+      filter === "all" ||
+      (filter === "veg" && item.type === "veg") ||
+      (filter === "nonveg" && item.type === "nonveg") ||
+      (filter === "bestseller" && item.bestseller) ||
+      (filter === "chefsSpecial" && item.chefsSpecial);
+
+    // Search filter (case-insensitive)
+    const searchMatch =
+      searchTerm === "" ||
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.desc.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return categoryMatch && searchMatch;
   });
 
   const [selectedPizza, setSelectedPizza] = useState(null);
@@ -256,7 +195,6 @@ export default function ComboSection({ filter }) {
         </p>
       </div>
 
-      {/* ✅ Use filteredItems instead of comboData */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {filteredItems.map((combo) => (
           <div
@@ -293,7 +231,6 @@ export default function ComboSection({ filter }) {
         ))}
       </div>
 
-      {/* Modal */}
       {showModal && selectedPizza && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">

@@ -8,7 +8,6 @@
 // import imgi06 from "../assets/img/imgi06.jpg";
 // import imgi07 from "../assets/img/imgi07.jpg";
 
-
 // import vegIcon from "../assets/img/veg.png";
 // import nonVegIcon from "../assets/img/NV.png";
 
@@ -33,7 +32,7 @@
 //   {
 //     id: 3,
 //     title: 'Garlic Herb Chicken Wings',
-//     desc: "Doused in chef's special garlic & herb glaze, these chicken wings are abolutely worth a try.",
+//     desc: "Doused in chef's special garlic & herb glaze, these chicken wings are absolutely worth a try.",
 //     price: 229,
 //     img: imgi03,
 //     type: "NonVeg",
@@ -45,7 +44,6 @@
 //     price: 229,
 //     img: imgi04,
 //     type: "NonVeg",
-
 //   },
 //   {
 //     id: 5,
@@ -72,7 +70,6 @@
 //     price: 299,
 //     img: imgi07,
 //     type: "NonVeg",
-    
 //   },
 //   {
 //     id: 8,
@@ -81,19 +78,20 @@
 //     price: 299,
 //     img: imgi08,
 //     type: "NonVeg",
-
 //   },
 // ];
 
-// export default function StarterSection({filter}) {
-//     const filteredItems = categories.filter((item) => {
+// export default function StarterSection({ filter }) {
+//   // Fix filter: use comboData instead of undefined categories
+//   const filteredItems = comboData.filter((item) => {
 //     if (filter === "all") return true;
-//     if (filter === "veg") return item.type === "veg";
-//     if (filter === "nonveg") return item.type === "nonveg";
+//     if (filter === "veg") return item.type.toLowerCase() === "veg";
+//     if (filter === "nonveg") return item.type.toLowerCase() === "nonveg";
 //     if (filter === "bestseller") return item.bestseller;
 //     if (filter === "chefsSpecial") return item.chefsSpecial;
 //     return true;
 //   });
+
 //   const [selectedPizza, setSelectedPizza] = useState(null);
 //   const [showModal, setShowModal] = useState(false);
 
@@ -121,7 +119,7 @@
 
 //       {/* Cards */}
 //       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-//         {comboData.map((combo) => (
+//         {filteredItems.map((combo) => (
 //           <div
 //             key={combo.id}
 //             className="bg-white shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition relative"
@@ -151,7 +149,7 @@
 //             <div className="p-4 flex flex-col justify-between h-[180px]">
 //               <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
 //                 <img
-//                   src={combo.type === "veg" ? vegIcon : nonVegIcon}
+//                   src={combo.type.toLowerCase() === "veg" ? vegIcon : nonVegIcon}
 //                   alt={combo.type}
 //                   className="w-4 h-4 object-contain"
 //                 />
@@ -178,7 +176,7 @@
 //         ))}
 //       </div>
 
-//       {/* Modal (unchanged) */}
+//       {/* Modal */}
 //       {showModal && selectedPizza && (
 //         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 //           <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">
@@ -231,8 +229,6 @@
 
 
 
-
-
 import React, { useState } from "react";
 import imgi08 from "../assets/img/imgi08.jpg";
 import imgi01 from "../assets/img/imgi01.jpg";
@@ -253,7 +249,7 @@ const comboData = [
     desc: "Wings with a Desi Zing! Classic chicken wings dunked in tandoori spices & smoked on grill. Take a break from the regular.",
     price: 229,
     img: imgi01,
-    type: "NonVeg",
+    type: "nonveg",
   },
   {
     id: 2,
@@ -261,7 +257,7 @@ const comboData = [
     desc: "Tender & juicy chicken wings rubbed with the supremely popular Peri Peri sauce. We're sure you'll love it peri much!",
     price: 229,
     img: imgi02,
-    type: "NonVeg",
+    type: "nonveg",
     bestseller: true,
   },
   {
@@ -270,7 +266,7 @@ const comboData = [
     desc: "Doused in chef's special garlic & herb glaze, these chicken wings are absolutely worth a try.",
     price: 229,
     img: imgi03,
-    type: "NonVeg",
+    type: "nonveg",
   },
   {
     id: 4,
@@ -278,7 +274,7 @@ const comboData = [
     desc: "Let's get the party started with the dad of all chicken wings, glazed & grilled in the timeless BBQ Sauce.",
     price: 229,
     img: imgi04,
-    type: "NonVeg",
+    type: "nonveg",
   },
   {
     id: 5,
@@ -286,7 +282,7 @@ const comboData = [
     desc: "Tender chunks of chicken coated in marinade of curd and spices and grilled perfectly.",
     price: 299,
     img: imgi05,
-    type: "NonVeg",
+    type: "nonveg",
     bestseller: true,
   },
   {
@@ -295,7 +291,7 @@ const comboData = [
     desc: "Tender and juicy chicken marinated in a peri peri marinade, and skewed on grill. So savoury, you'll keep craving for more!",
     price: 299,
     img: imgi06,
-    type: "NonVeg",
+    type: "nonveg",
     bestseller: true,
   },
   {
@@ -304,7 +300,7 @@ const comboData = [
     desc: "Juicy chicken cubes marinated in a creamy marinade, crushed black pepper & herbs. You're in for a delicious treat.",
     price: 299,
     img: imgi07,
-    type: "NonVeg",
+    type: "nonveg",
   },
   {
     id: 8,
@@ -312,19 +308,27 @@ const comboData = [
     desc: "Crispy and juicy, this BBQ grilled chicken is a lip-smacking combination of smoky flavours. Get set for a barbeque bash!",
     price: 299,
     img: imgi08,
-    type: "NonVeg",
+    type: "nonveg",
   },
 ];
 
-export default function StarterSection({ filter }) {
-  // Fix filter: use comboData instead of undefined categories
+export default function StarterSection({ filter = "all", searchTerm = "" }) {
   const filteredItems = comboData.filter((item) => {
-    if (filter === "all") return true;
-    if (filter === "veg") return item.type.toLowerCase() === "veg";
-    if (filter === "nonveg") return item.type.toLowerCase() === "nonveg";
-    if (filter === "bestseller") return item.bestseller;
-    if (filter === "chefsSpecial") return item.chefsSpecial;
-    return true;
+    const type = item.type.toLowerCase();
+
+    const categoryMatch =
+      filter === "all" ||
+      (filter === "veg" && type === "veg") ||
+      (filter === "nonveg" && type === "nonveg") ||
+      (filter === "bestseller" && item.bestseller) ||
+      (filter === "chefsSpecial" && item.chefsSpecial);
+
+    const searchMatch =
+      searchTerm === "" ||
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.desc.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return categoryMatch && searchMatch;
   });
 
   const [selectedPizza, setSelectedPizza] = useState(null);
@@ -344,9 +348,7 @@ export default function StarterSection({ filter }) {
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="mb-6 text-center sm:text-left">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-800">
-          Chicken Starters
-        </h2>
+        <h2 className="text-lg sm:text-xl font-bold text-gray-800">Chicken Starters</h2>
         <p className="text-gray-600 text-sm sm:text-base mt-1">
           Chicken wings & tikkas to satiate your meat cravings. Can't wait to get started?
         </p>
@@ -359,28 +361,17 @@ export default function StarterSection({ filter }) {
             key={combo.id}
             className="bg-white shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition relative"
           >
-            {/* Bestseller Tag */}
             {combo.bestseller && (
               <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">
                 Bestseller
               </div>
             )}
-
-            {/* Chef’s Special Tag */}
             {combo.chefsSpecial && (
               <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded">
                 Chef’s Special
               </div>
             )}
-
-            {/* Image */}
-            <img
-              src={combo.img}
-              alt={combo.title}
-              className="w-full h-48 object-cover"
-            />
-
-            {/* Details */}
+            <img src={combo.img} alt={combo.title} className="w-full h-48 object-cover" />
             <div className="p-4 flex flex-col justify-between h-[180px]">
               <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
                 <img
@@ -390,15 +381,9 @@ export default function StarterSection({ filter }) {
                 />
                 {combo.title}
               </h3>
-
-              <p className="text-gray-500 text-sm mb-3 leading-snug">
-                {combo.desc}
-              </p>
-
+              <p className="text-gray-500 text-sm mb-3 leading-snug">{combo.desc}</p>
               <div className="flex items-center justify-between mt-auto">
-                <span className="text-gray-900 font-semibold text-base">
-                  ₹{combo.price}
-                </span>
+                <span className="text-gray-900 font-semibold text-base">₹{combo.price}</span>
                 <button
                   className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 text-sm font-semibold transition"
                   onClick={() => handleAddClick(combo)}
@@ -421,34 +406,24 @@ export default function StarterSection({ filter }) {
             >
               ×
             </button>
-
-            <h2 className="text-lg font-bold mb-2">
-              {selectedPizza.title} – ₹{selectedPizza.price}
-            </h2>
-
+            <h2 className="text-lg font-bold mb-2">{selectedPizza.title} – ₹{selectedPizza.price}</h2>
             <h3 className="font-semibold mb-3">Select Crust</h3>
             <div className="space-y-2 mb-6">
-              {[
-                { name: "Pan Tossed", price: 0 },
-                { name: "Thin Crust", price: 0 },
-                { name: "Cheese Burst", price: 50 },
-                { name: "Thin Crust Cheese Burst", price: 50 },
-              ].map((crust, i) => (
-                <label
-                  key={i}
-                  className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
-                >
-                  <div>
-                    <input type="radio" name="crust" className="mr-2" />
-                    {crust.name}
-                  </div>
-                  <span className="text-gray-600 font-medium">
-                    + ₹{crust.price}
-                  </span>
-                </label>
-              ))}
+              {[{ name: "Pan Tossed", price: 0 }, { name: "Thin Crust", price: 0 }, { name: "Cheese Burst", price: 50 }, { name: "Thin Crust Cheese Burst", price: 50 }].map(
+                (crust, i) => (
+                  <label
+                    key={i}
+                    className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
+                  >
+                    <div>
+                      <input type="radio" name="crust" className="mr-2" />
+                      {crust.name}
+                    </div>
+                    <span className="text-gray-600 font-medium">+ ₹{crust.price}</span>
+                  </label>
+                )
+              )}
             </div>
-
             <div className="flex justify-between items-center mt-4 border-t pt-4">
               <span className="text-gray-700 font-medium">Items Added 0/2</span>
               <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">
@@ -461,3 +436,7 @@ export default function StarterSection({ filter }) {
     </div>
   );
 }
+
+
+
+
