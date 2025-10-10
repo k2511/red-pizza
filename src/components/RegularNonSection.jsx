@@ -313,6 +313,7 @@ import imgi45 from "../assets/img/imgi45.jpg";
 import imgi46 from "../assets/img/imgi46.jpg";
 import imgi47 from "../assets/img/imgi47.jpg";
 import nonVegIcon from "../assets/img/NV.png";
+import vegIcon from "../assets/img/veg.png";
 
 const comboData = [
   {
@@ -396,7 +397,8 @@ const comboData = [
     desc: "Garlic Roast Chicken | Smokey BBQ Chicken | Mushroom | Tomato | Serves 1.",
     price: 319,
     img: imgi42,
-    type: "nonveg",
+    type: "nonVeg",
+
   },
   {
     id: 11,
@@ -421,8 +423,8 @@ const comboData = [
     desc: "Peri Peri Chicken | Chicken Tikka | Roast Chicken | Black Olive | Red Paprika | Capsicum | Onion | Serves 1.",
     price: 349,
     img: imgi45,
-    type: "nonveg",
-    chefsSpecial: true,
+    type: "nonVeg",
+    chefsSpecial: true, // ✅ Correct field name (no apostrophe)
   },
   {
     id: 14,
@@ -430,7 +432,7 @@ const comboData = [
     desc: "Garlic Roast Chicken | Herb Grilled Chicken | Peri Peri Chicken | Smokey BBQ Chicken | Serves 1.",
     price: 349,
     img: imgi46,
-    type: "nonveg",
+    type: "nonVeg",
   },
   {
     id: 15,
@@ -442,7 +444,8 @@ const comboData = [
   },
 ];
 
-export default function RegularNonSection({ filter = "all", searchTerm = "" }) {
+export default function RegularNonSection({ filter = "all" }) {
+  // ✅ Filter comboData instead of undefined 'categories'
   const filteredItems = comboData.filter((item) => {
     const type = item.type.toLowerCase();
 
@@ -463,6 +466,7 @@ export default function RegularNonSection({ filter = "all", searchTerm = "" }) {
 
   const [selectedPizza, setSelectedPizza] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const handleAddClick = (combo) => {
     setSelectedPizza(combo);
@@ -472,6 +476,7 @@ export default function RegularNonSection({ filter = "all", searchTerm = "" }) {
   const closeModal = () => {
     setShowModal(false);
     setSelectedPizza(null);
+    setQuantity(1);
   };
 
   return (
@@ -482,7 +487,8 @@ export default function RegularNonSection({ filter = "all", searchTerm = "" }) {
           Regular 7" Pizzas | Non-Veg
         </h2>
         <p className="text-gray-600 text-sm sm:text-base mt-1">
-          Go SOLO with the new 7-inch Pizzas. Loaded with juicy meat chunks, topped with melting cheese, & baked to perfection.
+          Go SOLO with the new 7-inch Pizzas. Loaded with juicy meat chunks,
+          topped with melting cheese, & baked to perfection.
         </p>
       </div>
 
@@ -498,16 +504,22 @@ export default function RegularNonSection({ filter = "all", searchTerm = "" }) {
                 Bestseller
               </div>
             )}
+
+            {/* Chef’s Special Tag */}
             {combo.chefsSpecial && (
-              <div className="absolute top-10 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded">
-                Chef’s Special
+              <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                Chef's Special
               </div>
             )}
+
+            {/* Image */}
             <img
               src={combo.img}
               alt={combo.title}
               className="w-full h-48 object-cover"
             />
+
+            {/* Details */}
             <div className="p-4 flex flex-col justify-between h-[180px]">
               <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
                 <img
@@ -536,34 +548,42 @@ export default function RegularNonSection({ filter = "all", searchTerm = "" }) {
 
       {/* Modal */}
       {showModal && selectedPizza && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 font-bold text-xl"
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 font-bold text-2xl z-10"
             >
               ×
             </button>
+
             <h2 className="text-lg font-bold mb-2">
               {selectedPizza.title} – ₹{selectedPizza.price}
             </h2>
+
             <h3 className="font-semibold mb-3">Select Crust</h3>
             <div className="space-y-2 mb-6">
-              {[{ name: "Pan Tossed", price: 0 }, { name: "Thin Crust", price: 0 }, { name: "Cheese Burst", price: 50 }, { name: "Thin Crust Cheese Burst", price: 50 }].map(
-                (crust, i) => (
-                  <label
-                    key={i}
-                    className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
-                  >
-                    <div>
-                      <input type="radio" name="crust" className="mr-2" />
-                      {crust.name}
-                    </div>
-                    <span className="text-gray-600 font-medium">+ ₹{crust.price}</span>
-                  </label>
-                )
-              )}
+              {[
+                { name: "Pan Tossed", price: 0 },
+                { name: "Thin Crust", price: 0 },
+                { name: "Cheese Burst", price: 50 },
+                { name: "Thin Crust Cheese Burst", price: 50 },
+              ].map((crust, i) => (
+                <label
+                  key={i}
+                  className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
+                >
+                  <div>
+                    <input type="radio" name="crust" className="mr-2" />
+                    {crust.name}
+                  </div>
+                  <span className="text-gray-600 font-medium">
+                    + ₹{crust.price}
+                  </span>
+                </label>
+              ))}
             </div>
+
             <div className="flex justify-between items-center mt-4 border-t pt-4">
               <span className="text-gray-700 font-medium">Items Added 0/2</span>
               <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">

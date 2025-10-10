@@ -43,17 +43,15 @@
 //   },
 // ];
 
-// export default function VegStarterSection({ filter }) {
-//   // Use comboData instead of undefined categories
-//   const filteredItems = comboData.filter((item) => {
+// export default function VegStarterSection({filter}) {
+//     const filteredItems = categories.filter((item) => {
 //     if (filter === "all") return true;
-//     if (filter === "veg") return item.type.toLowerCase() === "veg";
-//     if (filter === "nonveg") return item.type.toLowerCase() === "nonveg";
+//     if (filter === "veg") return item.type === "veg";
+//     if (filter === "nonveg") return item.type === "nonveg";
 //     if (filter === "bestseller") return item.bestseller;
 //     if (filter === "chefsSpecial") return item.chefsSpecial;
 //     return true;
 //   });
-
 //   const [selectedPizza, setSelectedPizza] = useState(null);
 //   const [showModal, setShowModal] = useState(false);
 
@@ -81,7 +79,7 @@
 
 //       {/* Cards */}
 //       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-//         {filteredItems.map((combo) => (
+//         {comboData.map((combo) => (
 //           <div
 //             key={combo.id}
 //             className="bg-white shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition relative"
@@ -111,7 +109,7 @@
 //             <div className="p-4 flex flex-col justify-between h-[180px]">
 //               <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
 //                 <img
-//                   src={combo.type.toLowerCase() === "veg" ? vegIcon : nonVegIcon}
+//                   src={combo.type === "veg" ? vegIcon : nonVegIcon}
 //                   alt={combo.type}
 //                   className="w-4 h-4 object-contain"
 //                 />
@@ -138,7 +136,7 @@
 //         ))}
 //       </div>
 
-//       {/* Modal */}
+//       {/* Modal (unchanged) */}
 //       {showModal && selectedPizza && (
 //         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 //           <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">
@@ -189,15 +187,19 @@
 //   );
 // }
 
+
+
+
+
+
+
 import React, { useState } from "react";
 import imgi011 from "../assets/img/imgi011.jpg";
 import imgi012 from "../assets/img/imgi012.jpg";
 import imgi013 from "../assets/img/imgi013.jpg";
 import imgi014 from "../assets/img/imgi014.jpg";
 
-import vegIcon from "../assets/img/veg.png";
-import nonVegIcon from "../assets/img/NV.png";
-
+// Sample data
 const comboData = [
   {
     id: 1,
@@ -234,7 +236,8 @@ const comboData = [
   },
 ];
 
-export default function VegStarterSection({ filter = "all", searchTerm = "" }) {
+export default function VegStarterSection({ filter }) {
+  // Use comboData instead of undefined categories
   const filteredItems = comboData.filter((item) => {
     const type = item.type.toLowerCase();
 
@@ -253,59 +256,88 @@ export default function VegStarterSection({ filter = "all", searchTerm = "" }) {
     return categoryMatch && searchMatch;
   });
 
-  const [selectedPizza, setSelectedPizza] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-
-  const handleAddClick = (combo) => {
-    setSelectedPizza(combo);
-    setShowModal(true);
+  const handleAddClick = (itemId) => {
+    setItemQuantities({
+      ...itemQuantities,
+      [itemId]: 1
+    });
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedPizza(null);
+  const handleQuantityChange = (itemId, delta) => {
+    const currentQty = itemQuantities[itemId] || 0;
+    const newQty = Math.max(0, currentQty + delta);
+    
+    if (newQty === 0) {
+      const newQuantities = { ...itemQuantities };
+      delete newQuantities[itemId];
+      setItemQuantities(newQuantities);
+    } else {
+      setItemQuantities({
+        ...itemQuantities,
+        [itemId]: newQty
+      });
+    }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
       {/* Header */}
       <div className="mb-6 text-center sm:text-left">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-800">Veg Starters</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-gray-800">
+          Veg Starters
+        </h2>
         <p className="text-gray-600 text-sm sm:text-base mt-1">
           Perfect plus-ones for your pizza! Delicious starters that will turn any gathering into a party!
         </p>
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {filteredItems.map((combo) => (
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
+        {filteredItems.map((item) => (
           <div
-            key={combo.id}
-            className="bg-white shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition relative"
+            key={item.id}
+            className="bg-white shadow-sm rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition relative"
           >
+            {/* Bestseller Tag */}
             {combo.bestseller && (
               <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">
                 Bestseller
               </div>
             )}
+
+            {/* Chef’s Special Tag */}
             {combo.chefsSpecial && (
               <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded">
                 Chef’s Special
               </div>
             )}
-            <img src={combo.img} alt={combo.title} className="w-full h-48 object-cover" />
+
+            {/* Image */}
+            <img
+              src={combo.img}
+              alt={combo.title}
+              className="w-full h-48 object-cover"
+            />
+
+            {/* Details */}
             <div className="p-4 flex flex-col justify-between h-[180px]">
               <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
                 <img
-                  src={combo.type === "veg" ? vegIcon : nonVegIcon}
+                  src={combo.type.toLowerCase() === "veg" ? vegIcon : nonVegIcon}
                   alt={combo.type}
                   className="w-4 h-4 object-contain"
                 />
                 {combo.title}
               </h3>
-              <p className="text-gray-500 text-sm mb-3 leading-snug">{combo.desc}</p>
+
+              <p className="text-gray-500 text-sm mb-3 leading-snug">
+                {combo.desc}
+              </p>
+
               <div className="flex items-center justify-between mt-auto">
-                <span className="text-gray-900 font-semibold text-base">₹{combo.price}</span>
+                <span className="text-gray-900 font-semibold text-base">
+                  ₹{combo.price}
+                </span>
                 <button
                   className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 text-sm font-semibold transition"
                   onClick={() => handleAddClick(combo)}
@@ -328,27 +360,39 @@ export default function VegStarterSection({ filter = "all", searchTerm = "" }) {
             >
               ×
             </button>
-            <h2 className="text-lg font-bold mb-2">{selectedPizza.title} – ₹{selectedPizza.price}</h2>
+
+            <h2 className="text-lg font-bold mb-2">
+              {selectedPizza.title} – ₹{selectedPizza.price}
+            </h2>
+
             <h3 className="font-semibold mb-3">Select Crust</h3>
             <div className="space-y-2 mb-6">
-              {[{ name: "Pan Tossed", price: 0 }, { name: "Thin Crust", price: 0 }, { name: "Cheese Burst", price: 50 }, { name: "Thin Crust Cheese Burst", price: 50 }].map(
-                (crust, i) => (
-                  <label
-                    key={i}
-                    className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
-                  >
-                    <div>
-                      <input type="radio" name="crust" className="mr-2" />
-                      {crust.name}
-                    </div>
-                    <span className="text-gray-600 font-medium">+ ₹{crust.price}</span>
-                  </label>
-                )
-              )}
+              {[
+                { name: "Pan Tossed", price: 0 },
+                { name: "Thin Crust", price: 0 },
+                { name: "Cheese Burst", price: 50 },
+                { name: "Thin Crust Cheese Burst", price: 50 },
+              ].map((crust, i) => (
+                <label
+                  key={i}
+                  className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
+                >
+                  <div>
+                    <input type="radio" name="crust" className="mr-2" />
+                    {crust.name}
+                  </div>
+                  <span className="text-gray-600 font-medium">
+                    + ₹{crust.price}
+                  </span>
+                </label>
+              ))}
             </div>
+
             <div className="flex justify-between items-center mt-4 border-t pt-4">
               <span className="text-gray-700 font-medium">Items Added 0/2</span>
-              <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">Next ₹{selectedPizza.price}</button>
+              <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">
+                Next ₹{selectedPizza.price}
+              </button>
             </div>
           </div>
         </div>
