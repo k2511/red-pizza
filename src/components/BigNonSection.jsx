@@ -14,10 +14,11 @@ import imgi44 from "../assets/img/imgi44.jpg";
 import imgi45 from "../assets/img/imgi45.jpg";
 import imgi46 from "../assets/img/imgi46.jpg";
 import imgi47 from "../assets/img/imgi47.jpg";
+import vegIcon from "../assets/img/veg.png";
 import nonVegIcon from "../assets/img/NV.png";
 
 const comboData = [
-    {
+  {
     id: 1,
     title: "Chicken Smokey Joe [BIG 10'']",
     desc: "Smokey BBQ Chicken | Onion | Serves 2-3.",
@@ -99,7 +100,6 @@ const comboData = [
     price: 579,
     img: imgi42,
     type: "nonVeg",
-
   },
   {
     id: 11,
@@ -125,7 +125,7 @@ const comboData = [
     price: 649,
     img: imgi45,
     type: "nonVeg",
-    chefsSpecial: true, // ✅ Correct field name (no apostrophe)
+    chefsSpecial: true,
   },
   {
     id: 14,
@@ -147,11 +147,10 @@ const comboData = [
 ];
 
 export default function BigNonSection({ filter = "all" }) {
-  // ✅ Fix: filter comboData instead of undefined categories
   const filteredItems = comboData.filter((item) => {
     if (filter === "all") return true;
     if (filter === "veg") return item.type === "veg";
-    if (filter === "nonveg") return item.type.toLowerCase() === "nonveg"; // normalize case
+    if (filter === "nonveg") return item.type.toLowerCase() === "nonveg";
     if (filter === "bestseller") return item.bestseller;
     if (filter === "chefsSpecial") return item.chefsSpecial;
     return true;
@@ -159,15 +158,30 @@ export default function BigNonSection({ filter = "all" }) {
 
   const [selectedPizza, setSelectedPizza] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [selectedSize, setSelectedSize] = useState("big");
+  const [selectedCrust, setSelectedCrust] = useState("panTossed");
+  const [quantity, setQuantity] = useState(1);
 
   const handleAddClick = (combo) => {
     setSelectedPizza(combo);
     setShowModal(true);
+    setQuantity(1);
+    setSelectedSize("big");
+    setSelectedCrust("panTossed");
   };
 
   const closeModal = () => {
     setShowModal(false);
     setSelectedPizza(null);
+  };
+
+  const calculateTotal = () => {
+    if (!selectedPizza) return 0;
+    let total = selectedSize === "regular" ? selectedPizza.price - 100 : selectedPizza.price;
+    if (selectedCrust === "cheeseBurst" || selectedCrust === "thinCrustCheeseBurst") {
+      total += 50;
+    }
+    return total * quantity;
   };
 
   return (
@@ -178,7 +192,7 @@ export default function BigNonSection({ filter = "all" }) {
           BIG 10" Pizzas | Non-Veg
         </h2>
         <p className="text-gray-600 text-sm sm:text-base mt-1">
-          Go BIG with 10-inch Pizzas! 2X non-veg toppings & overflowing cheese; hand rolled & baked with a flavorful sauce.
+          Go BIG with the 10-inch Pizzas. Loaded with juicy meat chunks, topped with melting cheese, & baked to perfection.
         </p>
       </div>
 
@@ -196,26 +210,34 @@ export default function BigNonSection({ filter = "all" }) {
             )}
             {combo.chefsSpecial && (
               <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded">
-                Chef’s Special
+                Chef's Special
               </div>
             )}
 
-            <img src={combo.img} alt={combo.title} className="w-full h-48 object-cover" />
+            <img
+              src={combo.img}
+              alt={combo.title}
+              className="w-full h-48 object-cover"
+            />
 
             <div className="p-4 flex flex-col justify-between h-[180px]">
               <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
                 <img
                   src={nonVegIcon}
-                  alt="nonVeg"
+                  alt={combo.type}
                   className="w-4 h-4 object-contain"
                 />
                 {combo.title}
               </h3>
 
-              <p className="text-gray-500 text-sm mb-3 leading-snug">{combo.desc}</p>
+              <p className="text-gray-500 text-sm mb-3 leading-snug">
+                {combo.desc}
+              </p>
 
               <div className="flex items-center justify-between mt-auto">
-                <span className="text-gray-900 font-semibold text-base">₹{combo.price}</span>
+                <span className="text-gray-900 font-semibold text-base">
+                  ₹{combo.price}
+                </span>
                 <button
                   className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 text-sm font-semibold transition"
                   onClick={() => handleAddClick(combo)}
@@ -228,47 +250,217 @@ export default function BigNonSection({ filter = "all" }) {
         ))}
       </div>
 
-      {/* Modal */}
+      {/* Modal with Image */}
       {showModal && selectedPizza && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg w-full max-w-4xl max-h-[95vh] overflow-y-auto relative">
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 font-bold text-xl"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 font-bold text-2xl z-10 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow"
             >
               ×
             </button>
 
-            <h2 className="text-lg font-bold mb-2">
-              {selectedPizza.title} – ₹{selectedPizza.price}
-            </h2>
+            <div className="grid md:grid-cols-2 gap-6 p-6">
+              {/* Left Side - Image and Details */}
+              <div>
+                <div className="flex items-start gap-2 mb-3">
+                  <img
+                    src={nonVegIcon}
+                    alt="non-veg"
+                    className="w-5 h-5 object-contain mt-1"
+                  />
+                  <h2 className="text-xl font-bold text-gray-800">
+                    {selectedPizza.title}
+                  </h2>
+                </div>
 
-            <h3 className="font-semibold mb-3">Select Crust</h3>
-            <div className="space-y-2 mb-6">
-              {[
-                { name: "Pan Tossed", price: 0 },
-                { name: "Thin Crust", price: 0 },
-                { name: "Cheese Burst", price: 50 },
-                { name: "Thin Crust Cheese Burst", price: 50 },
-              ].map((crust, i) => (
-                <label
-                  key={i}
-                  className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
-                >
-                  <div>
-                    <input type="radio" name="crust" className="mr-2" />
-                    {crust.name}
+                <img
+                  src={selectedPizza.img}
+                  alt={selectedPizza.title}
+                  className="w-full rounded-lg mb-4 object-cover"
+                />
+
+                <p className="text-gray-600 mb-4">{selectedPizza.desc}</p>
+
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-2xl font-bold text-gray-900">
+                    ₹{selectedPizza.price}
+                  </span>
+                  <div className="flex items-center border rounded-lg">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-3 py-1 text-lg font-semibold hover:bg-gray-100"
+                    >
+                      -
+                    </button>
+                    <span className="px-4 py-1 font-semibold">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="px-3 py-1 text-lg font-semibold hover:bg-gray-100"
+                    >
+                      +
+                    </button>
                   </div>
-                  <span className="text-gray-600 font-medium">+ ₹{crust.price}</span>
-                </label>
-              ))}
-            </div>
+                </div>
+              </div>
 
-            <div className="flex justify-between items-center mt-4 border-t pt-4">
-              <span className="text-gray-700 font-medium">Items Added 0/2</span>
-              <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">
-                Next ₹{selectedPizza.price}
-              </button>
+              {/* Right Side - Options */}
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Select a Size</h3>
+                <div className="space-y-2 mb-6">
+                  <label className="flex justify-between items-center border rounded-lg p-3 cursor-pointer hover:bg-gray-50">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="size"
+                        value="regular"
+                        checked={selectedSize === "regular"}
+                        onChange={(e) => setSelectedSize(e.target.value)}
+                        className="w-4 h-4"
+                      />
+                      <span>Regular (7")</span>
+                    </div>
+                    <span className="text-gray-700 font-medium">₹ {selectedPizza.price - 100}</span>
+                  </label>
+                  <label className="flex justify-between items-center border rounded-lg p-3 cursor-pointer hover:bg-gray-50">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="size"
+                        value="big"
+                        checked={selectedSize === "big"}
+                        onChange={(e) => setSelectedSize(e.target.value)}
+                        className="w-4 h-4"
+                      />
+                      <span>Big (10")</span>
+                    </div>
+                    <span className="text-gray-700 font-medium">₹ {selectedPizza.price}</span>
+                  </label>
+                </div>
+
+                <h3 className="font-semibold text-lg mb-3">Choice of Crust</h3>
+                <div className="space-y-2 mb-6">
+                  {[
+                    { name: "Pan Tossed", value: "panTossed", price: 0 },
+                    { name: "Thin Crust", value: "thinCrust", price: 0 },
+                    { name: "Cheese Blast", value: "cheeseBurst", price: 50 },
+                    { name: "Thin Crust Cheese Blast", value: "thinCrustCheeseBurst", price: 50 },
+                  ].map((crust) => (
+                    <label
+                      key={crust.value}
+                      className="flex justify-between items-center border rounded-lg p-3 cursor-pointer hover:bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="crust"
+                          value={crust.value}
+                          checked={selectedCrust === crust.value}
+                          onChange={(e) => setSelectedCrust(e.target.value)}
+                          className="w-4 h-4"
+                        />
+                        <span className="flex items-center gap-1">
+                          <img src={vegIcon} alt="veg" className="w-4 h-4" />
+                          {crust.name}
+                        </span>
+                      </div>
+                      <span className="text-gray-700 font-medium">
+                        ₹ {crust.price}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+
+                <h3 className="font-semibold text-lg mb-3">Make it a FEAST?</h3>
+                <div className="space-y-2 mb-6">
+                  {[
+                    { name: "Nachos + Coke [250 ml]", price: 49, originalPrice: 69 },
+                    { name: "Nachos + Thums Up [250 ml]", price: 49, originalPrice: 69 },
+                    { name: "Nachos + Sprite [250 ml]", price: 49, originalPrice: 69 },
+                    { name: "Chocolava + Coke [250 ml]", price: 79, originalPrice: 99 },
+                    { name: "Chocolava + Thums Up [250 ml]", price: 79, originalPrice: 99 },
+                    { name: "Chocolava + Sprite [250 ml]", price: 79, originalPrice: 99 },
+                  ].map((addon, i) => (
+                    <label
+                      key={i}
+                      className="flex justify-between items-center border rounded-lg p-3 cursor-pointer hover:bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-4 h-4" />
+                        <span className="flex items-center gap-1">
+                          <img src={vegIcon} alt="veg" className="w-4 h-4" />
+                          {addon.name}
+                        </span>
+                      </div>
+                      <span className="text-gray-700 font-medium">
+                        <span className="line-through text-gray-400 text-sm mr-1">₹ {addon.originalPrice}</span>
+                        ₹ {addon.price}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+
+                <h3 className="font-semibold text-lg mb-3">Veg Toppings</h3>
+                <div className="space-y-2 mb-6">
+                  {[
+                    { name: "Paneer Cubes", price: 89 },
+                    { name: "Mushrooms", price: 89 },
+                    { name: "Black Olives", price: 79 },
+                    { name: "Spicy Jalapenos", price: 69 },
+                    { name: "Red Paprika", price: 69 },
+                    { name: "Golden Corn", price: 69 },
+                    { name: "Onion", price: 39 },
+                    { name: "Tomato", price: 39 },
+                    { name: "Capsicum", price: 39 },
+                  ].map((topping, i) => (
+                    <label
+                      key={i}
+                      className="flex justify-between items-center border rounded-lg p-3 cursor-pointer hover:bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-4 h-4" />
+                        <span className="flex items-center gap-1">
+                          <img src={vegIcon} alt="veg" className="w-4 h-4" />
+                          {topping.name}
+                        </span>
+                      </div>
+                      <span className="text-gray-700 font-medium">
+                        ₹ {topping.price}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+
+                <h3 className="font-semibold text-lg mb-3">Non-Veg Toppings <span className="text-sm text-gray-500 font-normal">(optional)</span></h3>
+                <div className="space-y-2 mb-6">
+                  {[
+                    { name: "Herb Grilled Chicken", price: 99 },
+                    { name: "Spicy Peri Peri Chicken", price: 99 },
+                    { name: "Chicken Tikka", price: 99 },
+                  ].map((topping, i) => (
+                    <label
+                      key={i}
+                      className="flex justify-between items-center border rounded-lg p-3 cursor-pointer hover:bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2">
+                        <input type="checkbox" className="w-4 h-4" />
+                        <span className="flex items-center gap-1">
+                          <img src={nonVegIcon} alt="non-veg" className="w-4 h-4" />
+                          {topping.name}
+                        </span>
+                      </div>
+                      <span className="text-gray-700 font-medium">
+                        ₹ {topping.price}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+
+                <button className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 font-semibold text-lg">
+                  ADD TO CART - ₹{calculateTotal()}
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -4,9 +4,7 @@ import imgi012 from "../assets/img/imgi012.jpg";
 import imgi013 from "../assets/img/imgi013.jpg";
 import imgi014 from "../assets/img/imgi014.jpg";
 
-import vegIcon from "../assets/img/veg.png";
-import nonVegIcon from "../assets/img/NV.png";
-
+// Sample data
 const comboData = [
   {
     id: 1,
@@ -43,8 +41,24 @@ const comboData = [
   },
 ];
 
-export default function VegStarterSection({ filter }) {
-  // Use comboData instead of undefined categories
+// Veg Icon Component
+const VegIcon = () => (
+  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
+    <rect x="2" y="2" width="20" height="20" stroke="#0f9d58" strokeWidth="2" fill="none" />
+    <circle cx="12" cy="12" r="6" fill="#0f9d58" />
+  </svg>
+);
+
+const NonVegIcon = () => (
+  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
+    <rect x="2" y="2" width="20" height="20" stroke="#d32f2f" strokeWidth="2" fill="none" />
+    <circle cx="12" cy="12" r="6" fill="#d32f2f" />
+  </svg>
+);
+
+export default function VegStarterSection({ filter = "all" }) {
+  const [itemQuantities, setItemQuantities] = useState({});
+
   const filteredItems = comboData.filter((item) => {
     if (filter === "all") return true;
     if (filter === "veg") return item.type.toLowerCase() === "veg";
@@ -54,134 +68,143 @@ export default function VegStarterSection({ filter }) {
     return true;
   });
 
-  const [selectedPizza, setSelectedPizza] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-
-  const handleAddClick = (combo) => {
-    setSelectedPizza(combo);
-    setShowModal(true);
+  const handleAddClick = (itemId) => {
+    setItemQuantities({
+      ...itemQuantities,
+      [itemId]: 1
+    });
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedPizza(null);
+  const handleQuantityChange = (itemId, delta) => {
+    const currentQty = itemQuantities[itemId] || 0;
+    const newQty = Math.max(0, currentQty + delta);
+    
+    if (newQty === 0) {
+      const newQuantities = { ...itemQuantities };
+      delete newQuantities[itemId];
+      setItemQuantities(newQuantities);
+    } else {
+      setItemQuantities({
+        ...itemQuantities,
+        [itemId]: newQty
+      });
+    }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
       {/* Header */}
-      <div className="mb-6 text-center sm:text-left">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-800">
+      <div className="mb-5 text-center sm:text-left">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">
           Veg Starters
         </h2>
-        <p className="text-gray-600 text-sm sm:text-base mt-1">
+        <p className="text-gray-600 text-sm sm:text-base mt-1 leading-snug">
           Perfect plus-ones for your pizza! Delicious starters that will turn any gathering into a party!
         </p>
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {filteredItems.map((combo) => (
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
+        {filteredItems.map((item) => (
           <div
-            key={combo.id}
-            className="bg-white shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition relative"
+            key={item.id}
+            className="bg-white shadow-sm rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition relative"
           >
             {/* Bestseller Tag */}
-            {combo.bestseller && (
-              <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">
+            {item.bestseller && (
+              <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
                 Bestseller
               </div>
             )}
 
-            {/* Chef’s Special Tag */}
-            {combo.chefsSpecial && (
-              <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded">
-                Chef’s Special
+            {/* Chef's Special Tag */}
+            {item.chefsSpecial && (
+              <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
+                Chef's Special
               </div>
             )}
 
             {/* Image */}
             <img
-              src={combo.img}
-              alt={combo.title}
-              className="w-full h-48 object-cover"
+              src={item.img}
+              alt={item.title}
+              className="w-full h-40 sm:h-48 object-cover"
             />
 
             {/* Details */}
-            <div className="p-4 flex flex-col justify-between h-[180px]">
-              <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
-                <img
-                  src={combo.type.toLowerCase() === "veg" ? vegIcon : nonVegIcon}
-                  alt={combo.type}
-                  className="w-4 h-4 object-contain"
-                />
-                {combo.title}
+            <div className="p-3 sm:p-4 flex flex-col justify-between min-h-[180px]">
+              <h3 className="text-gray-800 font-semibold text-sm sm:text-base mb-1 flex items-center gap-2">
+                {item.type.toLowerCase() === "veg" ? <VegIcon /> : <NonVegIcon />}
+                {item.title}
               </h3>
 
-              <p className="text-gray-500 text-sm mb-3 leading-snug">
-                {combo.desc}
+              <p className="text-gray-500 text-xs sm:text-sm mb-3 leading-snug">
+                {item.desc}
               </p>
 
               <div className="flex items-center justify-between mt-auto">
-                <span className="text-gray-900 font-semibold text-base">
-                  ₹{combo.price}
+                <span className="text-gray-900 font-semibold text-sm sm:text-base">
+                  ₹{item.price}
                 </span>
-                <button
-                  className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 text-sm font-semibold transition"
-                  onClick={() => handleAddClick(combo)}
-                >
-                  + Add
-                </button>
+                
+                {/* Show Add button or Quantity selector */}
+                {itemQuantities[item.id] > 0 ? (
+                  <div className="flex items-center border-2 border-gray-300 rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => handleQuantityChange(item.id, -1)}
+                      className="px-2 sm:px-3 py-1 text-base sm:text-lg font-semibold text-gray-600 hover:bg-gray-100 transition active:bg-gray-200"
+                    >
+                      -
+                    </button>
+                    <span className="px-3 sm:px-4 py-1 text-sm sm:text-base font-semibold text-gray-900 bg-white min-w-[40px] text-center">
+                      {itemQuantities[item.id]}
+                    </span>
+                    <button
+                      onClick={() => handleQuantityChange(item.id, 1)}
+                      className="px-2 sm:px-3 py-1 text-base sm:text-lg font-semibold text-gray-600 hover:bg-gray-100 transition active:bg-gray-200"
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="bg-red-500 text-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-lg hover:bg-red-600 active:bg-red-700 text-xs sm:text-sm font-semibold transition"
+                    onClick={() => handleAddClick(item.id)}
+                  >
+                    + Add
+                  </button>
+                )}
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Modal */}
-      {showModal && selectedPizza && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 font-bold text-xl"
-            >
-              ×
-            </button>
-
-            <h2 className="text-lg font-bold mb-2">
-              {selectedPizza.title} – ₹{selectedPizza.price}
-            </h2>
-
-            <h3 className="font-semibold mb-3">Select Crust</h3>
-            <div className="space-y-2 mb-6">
-              {[
-                { name: "Pan Tossed", price: 0 },
-                { name: "Thin Crust", price: 0 },
-                { name: "Cheese Burst", price: 50 },
-                { name: "Thin Crust Cheese Burst", price: 50 },
-              ].map((crust, i) => (
-                <label
-                  key={i}
-                  className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
-                >
-                  <div>
-                    <input type="radio" name="crust" className="mr-2" />
-                    {crust.name}
-                  </div>
-                  <span className="text-gray-600 font-medium">
-                    + ₹{crust.price}
+      {/* Cart Summary (Optional) */}
+      {Object.keys(itemQuantities).length > 0 && (
+        <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+          <h3 className="font-semibold text-gray-800 mb-2">Items in Cart:</h3>
+          <div className="space-y-1">
+            {Object.entries(itemQuantities).map(([itemId, quantity]) => {
+              const item = comboData.find(i => i.id === parseInt(itemId));
+              return (
+                <div key={itemId} className="flex justify-between text-sm">
+                  <span>{item?.title}</span>
+                  <span className="font-semibold">
+                    {quantity} x ₹{item?.price} = ₹{quantity * item?.price}
                   </span>
-                </label>
-              ))}
-            </div>
-
-            <div className="flex justify-between items-center mt-4 border-t pt-4">
-              <span className="text-gray-700 font-medium">Items Added 0/2</span>
-              <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">
-                Next ₹{selectedPizza.price}
-              </button>
-            </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-3 pt-3 border-t border-green-300 flex justify-between font-bold text-base">
+            <span>Total:</span>
+            <span>
+              ₹{Object.entries(itemQuantities).reduce((total, [itemId, quantity]) => {
+                const item = comboData.find(i => i.id === parseInt(itemId));
+                return total + (quantity * item?.price || 0);
+              }, 0)}
+            </span>
           </div>
         </div>
       )}

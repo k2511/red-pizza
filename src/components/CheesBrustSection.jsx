@@ -151,136 +151,315 @@ export default function CheesBrustSection({ filter = "all" }) {
   });
 
   const [selectedPizza, setSelectedPizza] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-
-  const handleAddClick = (combo) => {
-    setSelectedPizza(combo);
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedPizza(null);
-  };
-
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="mb-6 text-center sm:text-left">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-800">
-          CHEESE BURST Pizzas
+    const [showModal, setShowModal] = useState(false);
+    const [selectedCrust, setSelectedCrust] = useState("Thin Crust");
+    const [selectedFeast, setSelectedFeast] = useState([]);
+    const [selectedToppings, setSelectedToppings] = useState([]);
+    const [quantity, setQuantity] = useState(1);
+  
+    const feastOptions = [
+      { name: "Nachos + Coke [250 ml]", oldPrice: 69, price: 49, type: "veg" },
+      {
+        name: "Nachos + Thums Up [250 ml]",
+        oldPrice: 69,
+        price: 49,
+        type: "veg",
+      },
+      { name: "Nachos + Sprite [250 ml]", oldPrice: 69, price: 49, type: "veg" },
+      { name: "Chocolava + Coke [250 ml]", oldPrice: 99, price: 79, type: "veg" },
+      {
+        name: "Chocolava + Thums Up [250 ml]",
+        oldPrice: 99,
+        price: 79,
+        type: "veg",
+      },
+      {
+        name: "Chocolava + Sprite [250 ml]",
+        oldPrice: 99,
+        price: 79,
+        type: "veg",
+      },
+    ];
+  
+    const vegToppings = [
+      { name: "Paneer Cubes", price: 49, type: "veg" },
+      { name: "Mushrooms", price: 49, type: "veg" },
+      { name: "Black Olives", price: 39, type: "veg" },
+      { name: "Spicy Jalapenos", price: 39, type: "veg" },
+      { name: "Red Paprika", price: 39, type: "veg" },
+      { name: "Golden Corn", price: 39, type: "veg" },
+      { name: "Onion", price: 29, type: "veg" },
+      { name: "Tomato", price: 29, type: "veg" },
+      { name: "Capsicum", price: 29, type: "veg" },
+    ];
+  
+    const handleAddClick = (pizza) => {
+      setSelectedPizza(pizza);
+      setShowModal(true);
+    };
+  
+    const closeModal = () => {
+      setShowModal(false);
+      setSelectedPizza(null);
+      setSelectedFeast([]);
+      setSelectedToppings([]);
+    };
+  
+    const toggleFeast = (item) => {
+      setSelectedFeast((prev) =>
+        prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+      );
+    };
+  
+    const toggleTopping = (item) => {
+      setSelectedToppings((prev) =>
+        prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+      );
+    };
+  
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">
+          THIN CRUST Pizzas
         </h2>
-        <p className="text-gray-600 text-sm sm:text-base mt-1">
-          Crust that's perfectly baked & oozing with gooey, molten cheese. Pizzas that could be your new fave!
-        </p>
-      </div>
-
-      {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {filteredItems.map((combo) => (
-          <div
-            key={combo.id}
-            className="bg-white shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition relative"
-          >
-            {/* Bestseller Tag */}
-            {combo.bestseller && (
-              <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
-                Bestseller
-              </div>
-            )}
-
-            {/* Chef’s Special Tag */}
-            {combo.chefsSpecial && (
-              <div className="absolute top-10 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
-                Chef’s Special
-              </div>
-            )}
-
-            {/* Image */}
-            <img
-              src={combo.img}
-              alt={combo.title}
-              className="w-full h-48 object-cover"
-            />
-
-            {/* Details */}
-            <div className="p-4 flex flex-col justify-between h-[180px]">
-              <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
-                <img
-                  src={combo.type.toLowerCase() === "veg" ? vegIcon : nonVegIcon}
-                  alt={combo.type}
-                  className="w-4 h-4 object-contain"
-                />
-                {combo.title}
-              </h3>
-
-              <p className="text-gray-500 text-sm mb-3 leading-snug">
-                {combo.desc}
-              </p>
-
-              <div className="flex items-center justify-between mt-auto">
-                <span className="text-gray-900 font-semibold text-base">
-                  ₹{combo.price}
-                </span>
-                <button
-                  className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 text-sm font-semibold transition"
-                  onClick={() => handleAddClick(combo)}
-                >
-                  + Add
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Modal */}
-      {showModal && selectedPizza && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-11/12 sm:w-3/4 md:w-1/2 max-h-[90vh] overflow-y-auto relative">
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 font-bold text-xl"
+  
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {filteredItems.map((combo) => (
+            <div
+              key={combo.id}
+              className="bg-white shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition relative"
             >
-              ×
-            </button>
-
-            <h2 className="text-lg font-bold mb-2">
-              {selectedPizza.title} – ₹{selectedPizza.price}
-            </h2>
-
-            <h3 className="font-semibold mb-3">Select Crust</h3>
-            <div className="space-y-2 mb-6">
-              {[
-                { name: "Pan Tossed", price: 0 },
-                { name: "Thin Crust", price: 0 },
-                { name: "Cheese Burst", price: 50 },
-                { name: "Thin Crust Cheese Burst", price: 50 },
-              ].map((crust, i) => (
-                <label
-                  key={i}
-                  className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
-                >
-                  <div>
-                    <input type="radio" name="crust" className="mr-2" />
-                    {crust.name}
-                  </div>
-                  <span className="text-gray-600 font-medium">
-                    + ₹{crust.price}
+              {combo.bestseller && (
+                <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
+                  Bestseller
+                </div>
+              )}
+              {combo.chefsSpecial && (
+                <div className="absolute top-10 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded z-10">
+                  Chef’s Special
+                </div>
+              )}
+  
+              <img
+                src={combo.img}
+                alt={combo.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-gray-800 font-semibold text-base mb-1 flex items-center gap-2">
+                  <img
+                    src={
+                      combo.type.toLowerCase() === "veg" ? vegIcon : nonVegIcon
+                    }
+                    alt={combo.type}
+                    className="w-4 h-4"
+                  />
+                  {combo.title}
+                </h3>
+                <p className="text-gray-500 text-sm mb-3">{combo.desc}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-900 font-semibold text-base">
+                    ₹{combo.price}
                   </span>
-                </label>
-              ))}
+                  <button
+                    onClick={() => handleAddClick(combo)}
+                    className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 text-sm font-semibold"
+                  >
+                    + Add
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <div className="flex justify-between items-center mt-4 border-t pt-4">
-              <span className="text-gray-700 font-medium">Items Added 0/2</span>
-              <button className="bg-orange-500 text-white px-5 py-2 rounded-lg hover:bg-orange-600 font-semibold">
-                Next ₹{selectedPizza.price}
+          ))}
+        </div>
+  
+        {/* Modal */}
+        {showModal && selectedPizza && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-11/12 sm:w-4/5 md:w-3/5 max-h-[90vh] overflow-y-auto relative">
+              <button
+                onClick={closeModal}
+                className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 font-bold text-2xl"
+              >
+                ×
               </button>
+  
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left: Pizza Info */}
+                {/* Left: Pizza Info */}
+                <div>
+                  <img
+                    src={selectedPizza.img}
+                    alt={selectedPizza.title}
+                    className="rounded-lg w-full h-56 object-cover mb-3"
+                  />
+                  <div className="flex items-center gap-2 mb-2">
+                    <img
+                      src={
+                        selectedPizza.type.toLowerCase() === "veg"
+                          ? vegIcon
+                          : nonVegIcon
+                      }
+                      alt={selectedPizza.type}
+                      className="w-5 h-5"
+                    />
+                    <h2 className="text-lg font-bold text-gray-800">
+                      {selectedPizza.title}
+                    </h2>
+                  </div>
+                  <p className="text-gray-500">{selectedPizza.desc}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <p className="text-gray-800 font-semibold text-lg">
+                      ₹{selectedPizza.price}
+                    </p>
+                    <div className="flex items-center gap-3 border rounded-lg px-3 py-1">
+                      <button
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="text-gray-600 hover:text-gray-800 font-bold text-xl w-6 h-6 flex items-center justify-center"
+                      >
+                        −
+                      </button>
+                      <span className="font-semibold text-gray-800 min-w-[20px] text-center">
+                        {quantity}
+                      </span>
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="text-gray-600 hover:text-gray-800 font-bold text-xl w-6 h-6 flex items-center justify-center"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+  
+                {/* Right: Customization */}
+                <div>
+                  <h3 className="font-semibold text-gray-800 mb-2">
+                    Select a Size
+                  </h3>
+                  <div className="space-y-2 mb-5">
+                    {[
+                      { name: "Regular (7'')", price: 249 },
+                      { name: "Big (10'')", price: 399 },
+                    ].map((crust, i) => (
+                      <label
+                        key={i}
+                        className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
+                      >
+                        <div>
+                          <input
+                            type="radio"
+                            name="crust"
+                            checked={selectedCrust === crust.name}
+                            onChange={() => setSelectedCrust(crust.name)}
+                            className="mr-2"
+                          />
+                          {crust.name}
+                        </div>
+                        {crust.price > 0 && (
+                          <span className="text-gray-600">₹{crust.price}</span>
+                        )}
+                      </label>
+                    ))}
+                  </div>
+                  <h3 className="font-semibold text-gray-800 mb-2">
+                    Choice of Crust
+                  </h3>
+                  <div className="space-y-2 mb-5">
+                    {[
+                      { name: "Thin Crust", price: 0, type: "veg" },
+                      { name: "Thin Crust Cheese Blast", price: 0, type: "veg" },
+                    ].map((crust, i) => (
+                      <label
+                        key={i}
+                        className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
+                      >
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name="crust"
+                            checked={selectedCrust === crust.name}
+                            onChange={() => setSelectedCrust(crust.name)}
+                            className="mr-2"
+                          />
+                          <img src={vegIcon} alt="veg" className="w-4 h-4" />
+                          {crust.name}
+                        </div>
+                        {crust.price > 0 && (
+                          <span className="text-gray-600">₹{crust.price}</span>
+                        )}
+                      </label>
+                    ))}
+                  </div>
+  
+                  {/* Make it a FEAST */}
+                  <h3 className="font-semibold text-gray-800 mb-2">
+                    Make it a FEAST?
+                  </h3>
+                  <div className="space-y-2 mb-6">
+                    {feastOptions.map((f, i) => (
+                      <label
+                        key={i}
+                        className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
+                      >
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={selectedFeast.includes(f.name)}
+                            onChange={() => toggleFeast(f.name)}
+                            className="mr-2"
+                          />
+                          <img src={vegIcon} alt="veg" className="w-4 h-4" />
+                          {f.name}
+                        </div>
+                        <div className="text-right">
+                          <span className="line-through text-gray-400 text-sm mr-1">
+                            ₹{f.oldPrice}
+                          </span>
+                          <span className="text-gray-800 font-semibold">
+                            ₹{f.price}
+                          </span>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+  
+                  {/* Veg Toppings */}
+                  <h3 className="font-semibold text-gray-800 mb-2">
+                    Veg Toppings
+                  </h3>
+                  <div className="space-y-2 mb-6">
+                    {vegToppings.map((t, i) => (
+                      <label
+                        key={i}
+                        className="flex justify-between items-center border-b py-2 cursor-pointer hover:bg-gray-50 rounded"
+                      >
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={selectedToppings.includes(t.name)}
+                            onChange={() => toggleTopping(t.name)}
+                            className="mr-2"
+                          />
+                          <img src={vegIcon} alt="veg" className="w-4 h-4" />
+                          {t.name}
+                        </div>
+                        <span className="text-gray-800 font-semibold">
+                          ₹{t.price}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+  
+                  <button className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition">
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-}
+        )}
+      </div>
+    );
+  }
+  
